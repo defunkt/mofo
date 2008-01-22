@@ -153,7 +153,7 @@ class Microformat
 
     def build_class(microformat)
       hash = build_hash(microformat)
-      class_eval { attr_reader *(hash.keys << :properties) }
+      class_eval { attr_reader *(hash.keys << :properties); attr_reader :base_url }
 
       klass = new
       klass.instance_variable_set(:@properties, hash.keys.map { |i| i.to_s } )

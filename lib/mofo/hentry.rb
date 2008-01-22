@@ -45,3 +45,20 @@ class HEntry < Microformat
     atom_entity
   end
 end
+
+class Array
+  def to_atom
+    entries = map { |entry| entry.try(:to_atom) }.compact.join("\n")
+    <<-end_atom
+    <?xml version="1.0" encoding="UTF-8"?>
+    <feed xml:lang="en-US" xmlns="http://www.w3.org/2005/Atom">
+      <id>#{first.atom_id}</id>
+      <link type="text/html" href="#{first.base_url}" rel="alternate"/>
+      <link type="application/atom+xml" href="" rel="self"/>
+      <title>#{first.entry_title}</title>
+      <updated>#{first.updated || first.published}</updated>
+      #{entries}
+    </feed>
+    end_atom
+  end
+end

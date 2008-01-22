@@ -63,7 +63,7 @@ context "An hFeed" do
   end
 
   specify "should know its Atom representation" do
-    to_atom = HFeed.new($hentries).to_atom
+    to_atom = $hentries.to_atom
     expected = <<-end_atom
       <entry>
         <id>tag:errtheblog.com,2008
