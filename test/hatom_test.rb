@@ -67,17 +67,21 @@ context "An hFeed" do
   end
 
   specify "should know its Atom representation" do
-    to_atom = $hentries.to_atom
+    to_atom = $hentries.to_atom(:title => 'Err the Blog')
     expected = <<-end_atom
       <entry>
         <id>tag:errtheblog.com,2008
         <link type="text/html" href="http://errtheblog.com/post/13" rel="alternate"/>
-        <title>&ldquo;A Rails Toolbox&rdquo;</title>
+        <title>Err the Blog</title>
         <content type="html">
           <img 
           src=
           http://errtheblog.com/static/images/pink-toolbox.jpg
           <p>
+          <pre>
+          just a normal
+          test okay
+          </pre>
         </content>
         <updated>
         <author>

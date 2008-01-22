@@ -12,7 +12,7 @@ class HEntry < Microformat
   many :entry_content => :html, :tags => RelTag 
 
   after_find do
-    @updated = @published unless @updated if @published
+    @updated ||= @published if @published
   end
 
   def atom_id
@@ -34,7 +34,7 @@ class HEntry < Microformat
     #{atom_id}
     #{atom_link}
     #{to_atom :title, @entry_title}
-    <content type="html">#{Array(@entry_content).join("\n")}</content>
+    <content type="html">#{@entry_content)}</content>
     #{to_atom :updated}
     #{to_atom :published}
     <author>
@@ -47,7 +47,7 @@ class HEntry < Microformat
 end
 
 class Array
-  def to_atom
+  def to_atom(options = {})
     entries = map { |entry| entry.try(:to_atom) }.compact.join("\n")
     <<-end_atom
 <?xml version="1.0" encoding="UTF-8"?>
@@ -55,7 +55,7 @@ class Array
   <id>#{first.atom_id}</id>
   <link type="text/html" href="#{first.base_url}" rel="alternate"/>
   <link type="application/atom+xml" href="" rel="self"/>
-  <title>#{first.entry_title}</title>
+  <title>#{options[:title]}</title>
   <updated>#{first.updated || first.published}</updated>
   #{entries}
 </feed>
