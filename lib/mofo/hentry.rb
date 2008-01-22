@@ -9,7 +9,7 @@ class HEntry < Microformat
   one :entry_title, :entry_summary, :updated, :published,
       :author => HCard
 
-  many :entry_content, :tags => RelTag 
+  many :entry_content => :html, :tags => RelTag 
 
   after_find do
     @updated = @published unless @updated if @published
@@ -29,19 +29,19 @@ class HEntry < Microformat
       return value ? ("<#{property}>%s</#{property}>" % value) : nil
     end
 
-    <<-atom_entity
-    <entry>
-      #{atom_id}
-      #{atom_link}
-      #{to_atom :title, @entry_title}
-      <content type="html">#{Array(@entry_content).join("\n")}</content>
-      #{to_atom :updated}
-      #{to_atom :published}
-      <author>
-        #{to_atom :name, @author.try(:fn)}
-        #{to_atom :email, @author.try(:email)}
-      </author>
-    </entry>
+    entity = <<-atom_entity
+  <entry>
+    #{atom_id}
+    #{atom_link}
+    #{to_atom :title, @entry_title}
+    <content type="html">#{Array(@entry_content).join("\n")}</content>
+    #{to_atom :updated}
+    #{to_atom :published}
+    <author>
+      #{to_atom :name, @author.try(:fn)}
+      #{to_atom :email, @author.try(:email)}
+    </author>
+  </entry>
     atom_entity
   end
 end
@@ -50,15 +50,15 @@ class Array
   def to_atom
     entries = map { |entry| entry.try(:to_atom) }.compact.join("\n")
     <<-end_atom
-    <?xml version="1.0" encoding="UTF-8"?>
-    <feed xml:lang="en-US" xmlns="http://www.w3.org/2005/Atom">
-      <id>#{first.atom_id}</id>
-      <link type="text/html" href="#{first.base_url}" rel="alternate"/>
-      <link type="application/atom+xml" href="" rel="self"/>
-      <title>#{first.entry_title}</title>
-      <updated>#{first.updated || first.published}</updated>
-      #{entries}
-    </feed>
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xml:lang="en-US" xmlns="http://www.w3.org/2005/Atom">
+  <id>#{first.atom_id}</id>
+  <link type="text/html" href="#{first.base_url}" rel="alternate"/>
+  <link type="application/atom+xml" href="" rel="self"/>
+  <title>#{first.entry_title}</title>
+  <updated>#{first.updated || first.published}</updated>
+  #{entries}
+</feed>
     end_atom
   end
 end

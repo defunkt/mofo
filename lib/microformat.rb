@@ -286,7 +286,8 @@ class Microformat
         when 'img'  then element['alt']
         end || ''
 
-        (value.empty? ? element.innerHTML : value).strip.strip_html.coerce
+        ret = (value.empty? ? element.innerHTML : value).strip
+        target == :html ? ret : ret.strip_html.coerce
       end
     end
 

@@ -44,6 +44,10 @@ context "A parsed hEntry object" do
         <link type="text/html" href="http://errtheblog.com/post/13" rel="alternate"/>
         <title>&ldquo;A Rails Toolbox&rdquo;</title>
         <content type="html">
+          <img 
+          src=
+          http://errtheblog.com/static/images/pink-toolbox.jpg
+          <p>
         </content>
         <author>
           <name>Chris</name>
@@ -70,6 +74,10 @@ context "An hFeed" do
         <link type="text/html" href="http://errtheblog.com/post/13" rel="alternate"/>
         <title>&ldquo;A Rails Toolbox&rdquo;</title>
         <content type="html">
+          <img 
+          src=
+          http://errtheblog.com/static/images/pink-toolbox.jpg
+          <p>
         </content>
         <updated>
         <author>
