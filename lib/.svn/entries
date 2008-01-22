@@ -1,0 +1,58 @@
+8
+
+dir
+354
+svn+ssh://chris@errtheblog.com/svn/projects/mofo/lib
+svn+ssh://chris@errtheblog.com/svn/projects
+
+
+
+2007-08-18T02:43:33.265118Z
+273
+chris
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+cf301c5b-d72e-0410-996c-ed4829982077
+
+mofo
+dir
+
+microformat
+dir
+
+mofo.rb
+file
+
+
+
+
+2007-11-19T21:58:51.000000Z
+a8fef6b4c5a5e110bd4b81063a044cdd
+2007-04-24T08:22:53.936924Z
+4
+chris
+
+microformat.rb
+file
+
+
+
+
+2007-11-19T21:58:51.000000Z
+9a66d9c6d1cb561a4c4c9b085dfef599
+2007-08-04T03:11:23.094019Z
+270
+chris
+
