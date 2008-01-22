@@ -1,6 +1,7 @@
 ./CHANGELOG
 ./init.rb
 ./lib/microformat/array.rb
+./lib/microformat/object.rb
 ./lib/microformat/simple.rb
 ./lib/microformat/string.rb
 ./lib/microformat/time.rb
@@ -22,10 +23,19 @@
 ./Manifest.txt
 ./Rakefile
 ./README
+./site/favicon.ico
 ./site/index.html
 ./site/mofo-logo.png
 ./site/mootools.v1.00.js
+./site/p.js
+./site/spinner.gif
 ./site/style.css
+./site/try/index.html
+./site/try/p.js
+./site/try/spinner.gif
+./site/try/template.html
+./site/try/trymofo.rb
+./site/try.html
 ./test/base_url_test.rb
 ./test/ext_test.rb
 ./test/fixtures/bob.html
@@ -50,6 +60,7 @@
 ./test/hreview_test.rb
 ./test/include_pattern_test.rb
 ./test/reltag_test.rb
+./test/subclass_test.rb
 ./test/test_helper.rb
 ./test/xfn_test.rb
 ./test/xoxo_test.rb
