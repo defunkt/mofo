@@ -1,4 +1,4 @@
-%w(rubygems set hpricot microformat/string microformat/array open-uri ostruct timeout).each { |f| require f }
+%w(rubygems set hpricot microformat/object microformat/string microformat/array open-uri ostruct timeout).each { |f| require f }
 gem 'hpricot', '>=0.4.59'
 
 class Microformat
@@ -157,6 +157,7 @@ class Microformat
 
       klass = new
       klass.instance_variable_set(:@properties, hash.keys.map { |i| i.to_s } )
+      klass.instance_variable_set(:@base_url, @options[:base_url])
 
       hash.each do |key, value|
         klass.instance_variable_set("@#{key}", prepare_value(value) )

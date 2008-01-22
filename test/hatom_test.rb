@@ -1,9 +1,9 @@
 require File.dirname(__FILE__) + '/test_helper'
-require 'mofo/hentry'
+require 'mofo/hfeed'
 
 context "A parsed hEntry object" do
   setup do
-    $hentry ||= HEntry.find(:first => fixture(:hatom))
+    $hentry ||= HEntry.find(:first => fixture(:hatom), :base => 'http://errtheblog.com')
   end
 
   specify "should have a title" do
@@ -34,5 +34,60 @@ context "A parsed hEntry object" do
 
   specify "should have an array of tags" do
     $hentry.tags.should.be.an.instance_of Array
+  end
+
+  specify "should know its Atom representation" do
+    to_atom = $hentry.to_atom
+    expected = <<-end_atom
+      <entry>
+        <id>tag:errtheblog.com,2008
+        <link type="text/html" href="http://errtheblog.com/post/13" rel="alternate"/>
+        <title>&ldquo;A Rails Toolbox&rdquo;</title>
+        <content type="html">
+        </content>
+        <author>
+          <name>Chris</name>
+        </author>
+      </entry>
+    end_atom
+
+    expected.split("\n").each do |line|
+      to_atom.should.include line.strip
+    end
+  end
+end
+
+context "An hFeed" do
+  setup do
+    $hentries ||= HEntry.find(:all => fixture(:hatom), :base => 'http://errtheblog.com')
+  end
+
+  specify "should know its Atom representation" do
+    to_atom = HFeed.new($hentries).to_atom
+    expected = <<-end_atom
+      <entry>
+        <id>tag:errtheblog.com,2008
+        <link type="text/html" href="http://errtheblog.com/post/13" rel="alternate"/>
+        <title>&ldquo;A Rails Toolbox&rdquo;</title>
+        <content type="html">
+        </content>
+        <updated>
+        <author>
+          <name>Chris</name>
+        </author>
+      </entry>
+    end_atom
+
+    expected << <<-end_atom
+    <?xml version="1.0" encoding="UTF-8"?>
+    <feed xml:lang="en-US" xmlns="http://www.w3.org/2005/Atom">
+      <link type="text/html" href="
+      <link type="application/atom+xml" href="
+    </feed>
+    end_atom
+
+    expected.split("\n").each do |line|
+      to_atom.should.include line.strip
+    end
   end
 end
