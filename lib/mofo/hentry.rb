@@ -34,7 +34,7 @@ class HEntry < Microformat
     #{atom_id}
     #{atom_link}
     #{to_atom :title, @entry_title}
-    <content type="html">#{@entry_content)}</content>
+    <content type="html">#{@entry_content}</content>
     #{to_atom :updated}
     #{to_atom :published}
     <author>
