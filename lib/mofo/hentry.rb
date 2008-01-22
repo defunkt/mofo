@@ -52,7 +52,7 @@ class Array
     <<-end_atom
 <?xml version="1.0" encoding="UTF-8"?>
 <feed xml:lang="en-US" xmlns="http://www.w3.org/2005/Atom">
-  <id>#{first.atom_id}</id>
+  #{first.atom_id}
   <link type="text/html" href="#{first.base_url}" rel="alternate"/>
   <link type="application/atom+xml" href="" rel="self"/>
   <title>#{options[:title]}</title>

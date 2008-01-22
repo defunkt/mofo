@@ -2,7 +2,7 @@ require 'rubygems'
 require 'rake'
 gem 'echoe', '=1.3'
 
-version = '0.2.11'
+version = '0.2.12'
 
 ENV['RUBY_FLAGS'] = ""
 
