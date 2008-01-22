@@ -3,7 +3,6 @@ require 'microformat'
 require 'mofo/hcard'
 require 'mofo/rel_tag'
 require 'mofo/rel_bookmark'
-require 'digest/md5'
 
 class HEntry < Microformat
   one :entry_title, :entry_summary, :updated, :published,
@@ -24,6 +23,9 @@ class HEntry < Microformat
   end
 
   def to_atom(property = nil, value = nil)
+    require 'digest/md5'
+    require 'erb'
+
     if property
       value ||= instance_variable_get("@#{property}")
       return value ? ("<#{property}>%s</#{property}>" % value) : nil
@@ -34,9 +36,9 @@ class HEntry < Microformat
     #{atom_id}
     #{atom_link}
     #{to_atom :title, @entry_title}
-    <content type="html">#{@entry_content}</content>
-    #{to_atom :updated}
-    #{to_atom :published}
+    <content type="html">#{ERB::Util.h @entry_content}</content>
+    #{to_atom :updated, @updated.try(:xmlschema)}
+    #{to_atom :published, @updated.try(:xmlschema)}
     <author>
       #{to_atom :name, @author.try(:fn)}
       #{to_atom :email, @author.try(:email)}
@@ -56,7 +58,7 @@ class Array
   <link type="text/html" href="#{first.base_url}" rel="alternate"/>
   <link type="application/atom+xml" href="" rel="self"/>
   <title>#{options[:title]}</title>
-  <updated>#{first.updated || first.published}</updated>
+  <updated>#{(first.updated || first.published).try(:xmlschema)}</updated>
   #{entries}
 </feed>
     end_atom

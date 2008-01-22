@@ -44,10 +44,10 @@ context "A parsed hEntry object" do
         <link type="text/html" href="http://errtheblog.com/post/13" rel="alternate"/>
         <title>&ldquo;A Rails Toolbox&rdquo;</title>
         <content type="html">
-          <img 
+          &lt;img 
           src=
           http://errtheblog.com/static/images/pink-toolbox.jpg
-          <p>
+          &lt;p&gt;
         </content>
         <author>
           <name>Chris</name>
@@ -74,14 +74,10 @@ context "An hFeed" do
         <link type="text/html" href="http://errtheblog.com/post/13" rel="alternate"/>
         <title>Err the Blog</title>
         <content type="html">
-          <img 
+          &lt;img 
           src=
           http://errtheblog.com/static/images/pink-toolbox.jpg
-          <p>
-          <pre>
-          just a normal
-          test okay
-          </pre>
+          &lt;p&gt;
         </content>
         <updated>
         <author>
