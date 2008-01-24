@@ -11,15 +11,16 @@ class HEntry < Microformat
   many :entry_content => :html, :tags => RelTag 
 
   after_find do
+    @domain = @base_url.sub /http:\/\/([^\/]+).*/, '\1'
     @updated ||= @published if @published
   end
 
   def atom_id
-    "<id>tag:#{@base_url.sub('http://','')},#{Date.today.year}:#{Digest::MD5.hexdigest(entry_content)}</id>"
+    "<id>tag:#{@domain},2008-01-22:#{Digest::MD5.hexdigest(entry_content)}</id>"
   end
 
   def atom_link
-    %(<link type="text/html" href="#{@base_url}#{@bookmark}" rel="alternate"/>)
+    %(<link type="text/html" href="http://#{@domain}#{@bookmark}" rel="alternate"/>)
   end
 
   def to_atom(property = nil, value = nil)
@@ -56,7 +57,6 @@ class Array
 <feed xml:lang="en-US" xmlns="http://www.w3.org/2005/Atom">
   #{first.atom_id}
   <link type="text/html" href="#{first.base_url}" rel="alternate"/>
-  <link type="application/atom+xml" href="" rel="self"/>
   <title>#{options[:title]}</title>
   <updated>#{(first.updated || first.published).try(:xmlschema)}</updated>
   #{entries}

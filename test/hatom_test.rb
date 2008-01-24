@@ -63,14 +63,19 @@ end
 
 context "An hFeed" do
   setup do
-    $hentries ||= HEntry.find(:all => fixture(:hatom), :base => 'http://errtheblog.com')
+    $hentries ||= HEntry.find(:all => fixture(:hatom), :base => 'http://errtheblog.com/posts/rss')
+  end
+
+  specify "should know its atom id" do
+    $hentries.first.atom_id.should == "<id>tag:errtheblog.com,2008-01-22:a7ec6beee025594bbed6817b361e0e45</id>"
+
   end
 
   specify "should know its Atom representation" do
     to_atom = $hentries.to_atom(:title => 'Err the Blog')
     expected = <<-end_atom
       <entry>
-        <id>tag:errtheblog.com,2008
+        <id>tag:errtheblog.com,2008-01-22:
         <link type="text/html" href="http://errtheblog.com/post/13" rel="alternate"/>
         <title>Err the Blog</title>
         <content type="html">
@@ -90,7 +95,6 @@ context "An hFeed" do
     <?xml version="1.0" encoding="UTF-8"?>
     <feed xml:lang="en-US" xmlns="http://www.w3.org/2005/Atom">
       <link type="text/html" href="
-      <link type="application/atom+xml" href="
     </feed>
     end_atom
 
