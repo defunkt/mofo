@@ -15,6 +15,13 @@ context "A parsed hEntry object" do
     $hentry.author.fn.should.equal "Chris"
   end
 
+  specify "should have an author when there are no entry author but a nearest in parent hcard" do
+    with_parent = HEntry.find(:first => fixture(:redflavor),
+                             :base => 'http://journal.redflavor.com')
+    with_parent.author.should.be.an.instance_of HCard
+    with_parent.author.fn.should.equal "Eivind Uggedal"
+  end
+
   specify "should have content" do
     $hentry.entry_content.should.be.an.instance_of String
   end

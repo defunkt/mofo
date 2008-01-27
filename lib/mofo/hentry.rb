@@ -47,6 +47,30 @@ class HEntry < Microformat
   </entry>
     atom_entity
   end
+
+  def missing_author?
+    @author.nil?
+  end
+
+  def add_in_parent_hcard
+    @properties << 'author'
+    @author = self.class.find_in_parent_hcard
+  end
+
+  class << self
+    def build_class(microformat)
+      hentry = super(microformat)
+      hentry.add_in_parent_hcard if hentry.missing_author?
+      hentry
+    end
+
+    # Per spec: if the entry author is missing find the nearest in
+    # parent <address> element(s) with class name author
+    def find_in_parent_hcard
+      @in_parent_hcard ||= prepare_value(HCard.find(
+        :text => (@doc/"//.hentry/../address.vcard").to_s))
+    end
+  end
 end
 
 class Array
