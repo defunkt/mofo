@@ -54,7 +54,13 @@ class HEntry < Microformat
 
   def add_in_parent_hcard
     @properties << 'author'
-    @author = self.class.find_in_parent_hcard
+    @author = in_parent_hcard
+  end
+
+  # Per spec: if the entry author is missing find the nearest in
+  # parent <address> element(s) with class name author
+  def in_parent_hcard
+    @in_parent_hcard ||= self.class.find_in_parent_hcard
   end
 
   class << self
@@ -64,11 +70,10 @@ class HEntry < Microformat
       hentry
     end
 
-    # Per spec: if the entry author is missing find the nearest in
-    # parent <address> element(s) with class name author
     def find_in_parent_hcard
-      @in_parent_hcard ||= prepare_value(HCard.find(
-        :text => (@doc/"//.hentry/../address.vcard").to_s))
+      author = HCard.find(:text => (@doc/"//.hentry/..//address.vcard").to_s)
+      raise InvalidMicroformat if @options[:strict] && author.empty?
+      prepare_value(author)
     end
   end
 end

@@ -20,6 +20,13 @@ context "A parsed hEntry object" do
                              :base => 'http://journal.redflavor.com')
     with_parent.author.should.be.an.instance_of HCard
     with_parent.author.fn.should.equal "Eivind Uggedal"
+    with_parent.author.url.should.equal "http://redflavor.com"
+  end
+
+  specify "should be invalid without any author in strict mode" do
+    proc { HEntry.find(:first => fixture(:hatom_without_author),
+                       :base => 'http://bogus.redflavor.com',
+                       :strict => true) }.should.raise InvalidMicroformat
   end
 
   specify "should have content" do
