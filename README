@@ -32,6 +32,11 @@
   >> fireball.logo
   => "http://static.flickr.com/9/buddyicons/44621776@N00.jpg?1117572751"
 
+= Grab It
+
+  $ git clone git://github.com/defunkt/mofo.git
+  $ open http://github.com/defunkt/mofo
+
 = Microwhozit?
 
   Microformats are tiny little markup definitions built on top of, usually, 
