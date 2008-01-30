@@ -11,7 +11,7 @@ class HEntry < Microformat
   many :entry_content => :html, :tags => RelTag 
 
   after_find do
-    @domain = @base_url.sub /http:\/\/([^\/]+).*/, '\1'
+    @domain = @base_url.to_s.sub /http:\/\/([^\/]+).*/, '\1'
     @updated ||= @published if @published
   end
 
@@ -37,13 +37,12 @@ class HEntry < Microformat
     #{atom_id}
     #{atom_link}
     #{to_atom :title, @entry_title}
-    <content type="html">#{ERB::Util.h @entry_content}</content>
     #{to_atom :updated, @updated.try(:xmlschema)}
-    #{to_atom :published, @updated.try(:xmlschema)}
     <author>
       #{to_atom :name, @author.try(:fn)}
       #{to_atom :email, @author.try(:email)}
     </author>
+    <content type="html">#{ERB::Util.h @entry_content}</content>
   </entry>
     atom_entity
   end
@@ -63,18 +62,16 @@ class HEntry < Microformat
     @in_parent_hcard ||= self.class.find_in_parent_hcard
   end
 
-  class << self
-    def build_class(microformat)
-      hentry = super(microformat)
-      hentry.add_in_parent_hcard if hentry.missing_author?
-      hentry
-    end
+  def self.build_class(microformat)
+    hentry = super(microformat)
+    hentry.add_in_parent_hcard if hentry.missing_author?
+    hentry
+  end
 
-    def find_in_parent_hcard
-      author = HCard.find(:text => (@doc/"//.hentry/..//address.vcard").to_s)
-      raise InvalidMicroformat if @options[:strict] && author.empty?
-      prepare_value(author)
-    end
+  def self.find_in_parent_hcard
+    author = HCard.find(:text => (@doc/"//.hentry/..//address.vcard").to_s)
+    raise InvalidMicroformat if @options[:strict] && author.empty?
+    prepare_value(author)
   end
 end
 
