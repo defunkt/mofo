@@ -81,7 +81,7 @@ class Array
     <<-end_atom
 <?xml version="1.0" encoding="UTF-8"?>
 <feed xml:lang="en-US" xmlns="http://www.w3.org/2005/Atom">
-  #{first.atom_id}
+  <id>#{first.base_url}</id>
   <link type="text/html" href="#{first.base_url}" rel="alternate"/>
   <title>#{options[:title]}</title>
   <updated>#{(first.updated || first.published).try(:xmlschema)}</updated>

@@ -89,7 +89,7 @@ context "An hFeed" do
     to_atom = $hentries.to_atom(:title => 'Err the Blog')
     expected = <<-end_atom
       <entry>
-        <id>tag:errtheblog.com,2008-01-22:
+        <id>http://errtheblog.com/posts/rss</id>
         <link type="text/html" href="http://errtheblog.com/post/13" rel="alternate"/>
         <title>Err the Blog</title>
         <content type="html">
