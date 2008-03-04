@@ -284,6 +284,8 @@ class Microformat
         value = case element.name
         when 'abbr' then element['title']
         when 'img'  then element['alt']
+        when 'input' then element['name']
+        when 'form'  then element['action']  
         end || ''
 
         ret = (value.empty? ? element.innerHTML : value).strip
