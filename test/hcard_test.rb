@@ -29,6 +29,25 @@ context "A simple hcard definition" do
   end
 end
 
+context "The hCard found in the upcoming_single page" do
+  setup do
+    $upcoming_text = HCard.find(:text => open(fixture(:upcoming_single)).read) 
+    $upcoming_find = HCard.find(fixture(:upcoming_single))
+  end
+  
+  specify "should be identical whether passed as :text or found with default method" do
+    $upcoming_text.fn.should.equal                    $upcoming_find.fn
+    $upcoming_text.org.should.equal                   $upcoming_find.org
+    $upcoming_text.adr.base_url.should.equal          $upcoming_find.adr.base_url
+    $upcoming_text.adr.postal_code.should.equal       $upcoming_find.adr.postal_code
+    $upcoming_text.adr.locality.should.equal          $upcoming_find.adr.locality
+    $upcoming_text.adr.region.should.equal            $upcoming_find.adr.region
+    $upcoming_text.adr.street_address.should.equal    $upcoming_find.adr.street_address
+    $upcoming_text.geo.longitude.should.equal         $upcoming_find.geo.longitude
+    $upcoming_text.geo.latitude.should.equal          $upcoming_find.geo.latitude
+  end
+end
+
 context "The parsed fauxtank hCard object" do
   setup do
     $fauxtank ||= HCard.find(:first => fixture(:fauxtank))
