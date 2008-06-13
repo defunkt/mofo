@@ -143,7 +143,7 @@ class Microformat
       when Hpricot, Hpricot::Elements 
         source
       when Hash                       
-        Hpricot(source[:text]) if source[:text]
+        Hpricot(source.delete(:text)) if source[:text]
       end
     end
 
