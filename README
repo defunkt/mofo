@@ -5,6 +5,14 @@
                      helper
                      toy
 
+= First, a word
+
+Hpricot, while still great, seems destined for deprecation.
+
+If you're into Nokogiri try Prism for your Microformatic needs:
+
+http://github.com/mwunsch/prism
+
 = Get Started Immediately
 
   $ irb -rubygems 
